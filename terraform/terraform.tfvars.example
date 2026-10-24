@@ -1,0 +1,9 @@
+aws_region          = "ap-south-1"
+project_name        = "aws-devops-assessment"
+environment         = "dev"
+instance_type       = "t3.micro"
+db_instance_class   = "db.t3.micro"
+enable_multi_az_rds = false
+db_name             = "devopsdb"
+db_username         = "devopsadmin"
+github_repository   = "YOUR_GITHUB_USERNAME/aws-devops-terraform-assessment"
