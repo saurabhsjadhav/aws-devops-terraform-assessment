@@ -21,7 +21,7 @@ resource "aws_launch_template" "app" {
 
   tag_specifications {
     resource_type = "instance"
-    tags = { Name = "${local.name}-app" }
+    tags          = { Name = "${local.name}-app" }
   }
 
   lifecycle {

@@ -5,8 +5,8 @@ resource "random_password" "db" {
 }
 
 resource "aws_secretsmanager_secret" "db" {
-  name_prefix = "${local.name}-db-credentials-"
-  description = "Generated credentials for the assessment RDS instance"
+  name_prefix             = "${local.name}-db-credentials-"
+  description             = "Generated credentials for the assessment RDS instance"
   recovery_window_in_days = 0
 }
 

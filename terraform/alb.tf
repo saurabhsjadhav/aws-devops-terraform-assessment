@@ -12,7 +12,7 @@ resource "aws_lb" "app" {
   }
 
   depends_on = [aws_s3_bucket_policy.alb_logs]
-  tags = { Name = "${local.name}-alb" }
+  tags       = { Name = "${local.name}-alb" }
 }
 
 resource "aws_lb_target_group" "app" {

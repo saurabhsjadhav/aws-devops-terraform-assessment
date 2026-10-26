@@ -17,7 +17,7 @@ resource "aws_subnet" "public" {
   cidr_block              = each.value.cidr
   availability_zone       = each.value.az
   map_public_ip_on_launch = true
-  tags = { Name = "${local.name}-public-${each.key}", Tier = "public" }
+  tags                    = { Name = "${local.name}-public-${each.key}", Tier = "public" }
 }
 
 resource "aws_subnet" "app" {
@@ -25,7 +25,7 @@ resource "aws_subnet" "app" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = each.value.cidr
   availability_zone = each.value.az
-  tags = { Name = "${local.name}-app-${each.key}", Tier = "application" }
+  tags              = { Name = "${local.name}-app-${each.key}", Tier = "application" }
 }
 
 resource "aws_subnet" "db" {
@@ -33,7 +33,7 @@ resource "aws_subnet" "db" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = each.value.cidr
   availability_zone = each.value.az
-  tags = { Name = "${local.name}-db-${each.key}", Tier = "database" }
+  tags              = { Name = "${local.name}-db-${each.key}", Tier = "database" }
 }
 
 resource "aws_route_table" "public" {

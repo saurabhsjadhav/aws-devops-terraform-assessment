@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "app" {
   bucket_prefix = "${local.name}-app-"
   force_destroy = true
-  tags = { Name = "${local.name}-app-storage" }
+  tags          = { Name = "${local.name}-app-storage" }
 }
 
 resource "aws_s3_bucket_public_access_block" "app" {
@@ -24,7 +24,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "app" {
 resource "aws_s3_bucket" "alb_logs" {
   bucket_prefix = "${local.name}-alb-logs-"
   force_destroy = true
-  tags = { Name = "${local.name}-alb-access-logs" }
+  tags          = { Name = "${local.name}-alb-access-logs" }
 }
 
 resource "aws_s3_bucket_public_access_block" "alb_logs" {

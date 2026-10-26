@@ -26,7 +26,7 @@ resource "aws_db_instance" "mysql" {
   storage_encrypted      = true
   multi_az               = var.enable_multi_az_rds
 
-  backup_retention_period = 1
+  backup_retention_period    = 1
   auto_minor_version_upgrade = true
 
   deletion_protection = false
