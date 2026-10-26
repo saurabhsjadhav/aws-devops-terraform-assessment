@@ -1,10 +1,13 @@
+
 name: Terraform CI and deployment
 
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - main
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -17,28 +20,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Download repository code
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Step 2: Install Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      # Step 3: Inspect GitHub OIDC claims
+      # Temporary diagnostic step to identify the correct AWS trust policy
       - name: Inspect GitHub OIDC claims
         if: github.event_name != 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
-            const core = require('@actions/core');
             const token = await core.getIDToken('sts.amazonaws.com');
+
             const payload = JSON.parse(
               Buffer.from(token.split('.')[1], 'base64url').toString('utf8')
             );
+
             core.info(`sub: ${payload.sub}`);
             core.info(`aud: ${JSON.stringify(payload.aud)}`);
             core.info(`repository: ${payload.repository}`);
             core.info(`repository_id: ${payload.repository_id}`);
             core.info(`repository_owner_id: ${payload.repository_owner_id}`);
 
+      # Step 4: Authenticate to AWS using GitHub OIDC
       - name: Configure AWS credentials with OIDC
         if: github.event_name != 'pull_request'
         uses: aws-actions/configure-aws-credentials@v4
@@ -47,17 +56,26 @@ jobs:
           aws-region: ap-south-1
           role-session-name: GitHubActionsAssessment
 
+      # Step 5: Check Terraform formatting
       - name: Terraform format
         working-directory: terraform
         run: terraform fmt -check -recursive
 
+      # Step 6: Initialize Terraform without a remote backend
       - name: Terraform init
         working-directory: terraform
         run: terraform init -backend=false
 
+      # Step 7: Validate Terraform configuration
       - name: Terraform validate
         working-directory: terraform
         run: terraform validate
 
+      # Step 8: Display deployment status
       - name: Note about deployment
-        run: echo "Validation complete. Configure remote state and review IAM before enabling apply."
+        run: |
+          echo "Terraform formatting check completed."
+          echo "Terraform initialization completed."
+          echo "Terraform validation completed."
+          echo "No AWS infrastructure has been deployed by this workflow."
+          echo "Configure remote state and review IAM permissions before deployment."
