@@ -6,4 +6,4 @@ db_instance_class   = "db.t3.micro"
 enable_multi_az_rds = false
 db_name             = "devopsdb"
 db_username         = "devopsadmin"
-github_repository   = "YOUR_GITHUB_USERNAME/aws-devops-terraform-assessment"
+github_repository   = "https://github.com/saurabhsjadhav/aws-devops-terraform-assessment.git"
